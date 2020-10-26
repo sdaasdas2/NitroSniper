@@ -11,3 +11,6 @@ go get github.com/fatih/color
 (add token to token.txt)
 
 go run main.go
+
+# showcase
+![](/unknown.png)
