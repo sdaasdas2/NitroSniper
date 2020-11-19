@@ -1,4 +1,3 @@
-//(discord.com/gifts/|discordapp.com/gifts/|discord.gift/)([a-zA-Z0-9]+)
 package main
 
 import (
@@ -23,7 +22,6 @@ var used = []string{}
 var (
 	giftRegex = regexp.MustCompile("(discord.com/gifts/|discordapp.com/gifts/|discord.gift/)([a-zA-Z0-9]+)")
 )
-
 func contains(arr []string, str string) bool {
 	for _, a := range arr {
 		if a == str {
@@ -32,15 +30,12 @@ func contains(arr []string, str string) bool {
 	}
 	return false
 }
-
 func makeTimestamp() int64 {
 	return time.Now().UnixNano() / int64(time.Millisecond)
 }
-
 var (
 	token, err = ioutil.ReadFile("token.txt")
 )
-
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Content != "" && giftRegex.Match([]byte(m.Content)) {
 		gifts := giftRegex.FindStringSubmatch(m.Content)
@@ -63,7 +58,6 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		req, err := http.NewRequest("POST", link, bytes.NewBuffer(body))
 		req.Header.Add("Content-Type", "application/json")
 		req.Header.Add("authorization", string(token))
-
 		res, err := client.Do(req)
 		if err != nil {
 			log.Fatal(err)
@@ -86,7 +80,6 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 }
 
 func main() {
-
 	dg, err := discordgo.New(string(token))
 	if err != nil {
 		fmt.Println("error creating Discord session,", err)
